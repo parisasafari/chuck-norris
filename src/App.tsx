@@ -1,6 +1,6 @@
-import { Navigate, Routes, Route } from 'react-router-dom'
-import { JokeList } from './pages/jokeList'
 import { Favourites } from './pages/favourites'
+import { JokeList } from './pages/jokeList'
+import { Navigate, Route, Routes } from 'react-router-dom'
 import { NotFound } from './pages/notFound'
 
 const App = () => {

@@ -11,3 +11,13 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.selected-heart {
+  font-size: 24px;
+  color: grey;
+}
+
+.heart {
+  font-size: 24px;
+  color: red;
+}

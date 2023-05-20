@@ -21,5 +21,9 @@
     ],
     "import/no-unresolved": [2, { "caseSensitive": false }]
   },
-  "settings": { "import/resolver": { "node": { "paths": ["src"] } } }
+  "settings": {
+    "import/resolver": {
+      "node": { "paths": ["src"], "extensions": [".js", ".jsx", ".ts", ".tsx"] }
+    }
+  }
 }
