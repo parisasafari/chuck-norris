@@ -2,51 +2,46 @@ import { useEffect, useState } from 'react'
 import styled from '@emotion/styled'
 import { getItem, setItem } from '../../helpers/localStorage'
 import { Link } from 'react-router-dom'
-
-const URL = 'https://api.chucknorris.io/jokes/random'
-
-export interface ChuckNorrisJoke {
-  icon_url: string
-  id: string
-  url: string
-  value: string
-}
+import { ChuckNorrisJoke, URL } from '../../utils/jokes'
 
 export const JokeList = () => {
   const [jokes, setJokes] = useState<ChuckNorrisJoke[]>([])
   const [selectedJokes, setSelectedJokes] = useState<ChuckNorrisJoke[]>([])
   const [timer, setTimer] = useState<boolean>(false)
+  const [popupVisibility, setPopupVisibility] = useState<boolean>(false)
 
   const fetchNewJoke = async () => {
-    try {
-      const response = await fetch(URL)
-      const data = await response.json()
-      setJokes(prevJokes => {
-        if (prevJokes.length === 10) {
-          prevJokes.shift()
-        }
-        return [...prevJokes, data]
+    fetch(URL)
+      .then(response => response.json())
+      .then(data => {
+        setJokes(prevJokes => {
+          if (prevJokes.length === 10) {
+            prevJokes.unshift()
+          }
+          return [data, ...prevJokes]
+        })
       })
-    } catch (error) {
-      console.error('Error fetching new joke:', error)
-    }
+      .catch(console.error)
   }
 
   const updateFavouriteList = (joke: ChuckNorrisJoke) => {
     const jokeIndex = selectedJokes?.findIndex(item => item.id === joke.id)
-    if (jokeIndex === -1) {
-      setSelectedJokes(prevSelectedJokes => [...prevSelectedJokes, joke])
-    } else {
-      const updatedSelectedJokes = [...selectedJokes]
-      updatedSelectedJokes.splice(jokeIndex, 1)
-      setSelectedJokes(updatedSelectedJokes)
+    console.log('selectedJokes.length', selectedJokes.length)
+    if (jokeIndex === -1 && selectedJokes.length === 10) {
+      setPopupVisibility(true)
+      console.log('popupVisibility', popupVisibility)
+      return
     }
-    setItem('selected-jokes', selectedJokes)
-  }
+    let updatedSelectedJokes
 
-  const initializeSelectedJokes = async () => {
-    const selected = (await getItem('selected-jokes')) || []
-    setSelectedJokes(selected)
+    if (jokeIndex === -1) {
+      updatedSelectedJokes = [...selectedJokes, joke]
+    } else {
+      updatedSelectedJokes = [...selectedJokes]
+      updatedSelectedJokes.splice(jokeIndex, 1)
+    }
+    setItem('selected-jokes', updatedSelectedJokes)
+    setSelectedJokes(updatedSelectedJokes)
   }
 
   useEffect(() => {
@@ -65,7 +60,10 @@ export const JokeList = () => {
   }, [])
 
   useEffect(() => {
-    initializeSelectedJokes()
+    const selected = getItem('selected-jokes')
+    if (selected) {
+      setSelectedJokes(selected)
+    }
   }, [])
 
   useEffect(() => {
@@ -75,14 +73,14 @@ export const JokeList = () => {
     }
   }, [timer])
 
-  return (
-    <div>
-      <Link to={'/favourites'}>favourite jokes</Link>
-      <p>this is a joke list page:</p>
+  console.log('popupVisibility', popupVisibility)
 
+  return (
+    <StyledWrapper>
+      <StyledLink to={'/favourites'}>favourite jokes</StyledLink>
       {jokes?.map(item => (
-        <p key={item.id}>
-          <button
+        <StyledCard key={item.id}>
+          <StyledButton
             onClick={() => {
               updateFavouriteList(item)
             }}
@@ -94,14 +92,65 @@ export const JokeList = () => {
                 false
               }
             />
-          </button>
-
+          </StyledButton>
           {item.value}
-        </p>
+        </StyledCard>
       ))}
-    </div>
+      <StyledOverlay isVisible={popupVisibility}>
+        <StyledPopUp isVisible={popupVisibility}>
+          <StyledCloseButton onClick={() => setPopupVisibility(false)}>
+            <StyledCloseIcon className="fa fa-window-close" />
+          </StyledCloseButton>
+
+          <h5>
+            Your favorite list is currently at maximum capacity. Please remove
+            an item to make space for adding new favorites.
+          </h5>
+
+          <p>You can click on the below link to manage your favourite list:</p>
+
+          <StyledLink to={'/favourites'}>favourite jokes</StyledLink>
+        </StyledPopUp>
+      </StyledOverlay>
+    </StyledWrapper>
   )
 }
+
+const StyledWrapper = styled.div(() => ({
+  width: 800,
+  display: 'flex',
+  flexDirection: 'column',
+  margin: 'auto',
+}))
+
+const StyledCard = styled.div(() => ({
+  border: '1px solid rgba(149, 157, 165, 0.2)',
+  margin: 8,
+  padding: 16,
+  borderRadius: 8,
+  color: '#7286a0',
+  boxShadow: 'rgba(149, 157, 165, 0.2) 0px 8px 24px',
+  // backgroundColor: 'aliceblue',
+  // opacity: '0.9',
+}))
+
+const StyledButton = styled.button(() => ({
+  border: 'none',
+  backgroundColor: 'transparent',
+  margin: 4,
+  padding: 8,
+  borderRadius: 8,
+  cursor: 'pointer',
+}))
+
+const StyledLink = styled(Link)(() => ({
+  textDecoration: 'none',
+  backgroundColor: '#ffe5f1',
+  width: 'fit-content',
+  margin: 4,
+  padding: 12,
+  borderRadius: 8,
+}))
 
 const StyledHeart = styled.div<{ selected: boolean }>(
   () => ({
@@ -112,7 +161,59 @@ const StyledHeart = styled.div<{ selected: boolean }>(
   ({ selected }) =>
     selected
       ? {
-          color: 'red',
+          color: '#ff7477',
         }
-      : { color: 'grey' },
+      : { color: '#b5d6d6' },
 )
+
+const StyledPopUp = styled.div<{ isVisible: boolean }>(
+  () => ({
+    padding: 40,
+    borderRadius: 4,
+    width: 500,
+    height: 250,
+    textAlign: 'center',
+    position: 'relative',
+    transition: 'all 5s ease-in-out',
+    zIndex: 10,
+    backgroundColor: 'white',
+    margin: 'auto',
+    marginTop: 100,
+    flexDirection: 'column',
+    justifyContent: 'space-evenly',
+    alignItems: 'center',
+  }),
+  ({ isVisible }) =>
+    isVisible
+      ? {
+          display: 'flex',
+        }
+      : { display: 'none' },
+)
+const StyledOverlay = styled.div<{ isVisible: boolean }>(
+  () => ({
+    position: 'fixed',
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0,
+    background: 'rgba(0, 0, 0, 0.7)',
+    transition: 'opacity 500ms',
+  }),
+  ({ isVisible }) =>
+    isVisible
+      ? {
+          visibility: 'visible',
+          opacity: 1,
+        }
+      : { visibility: 'hidden', opacity: 0 },
+)
+
+const StyledCloseButton = styled(StyledButton)(() => ({
+  marginLeft: 'auto',
+}))
+
+const StyledCloseIcon = styled.i(() => ({
+  color: '#c0b9bf',
+  fontSize: 'large',
+}))
