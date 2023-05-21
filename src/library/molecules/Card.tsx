@@ -8,6 +8,8 @@ const Card = ({ children }: { children: ReactNode }) => {
 export default Card
 
 const StyledCard = styled.div(() => ({
+  display: 'flex',
+  alignItems: 'center',
   border: '1px solid rgba(149, 157, 165, 0.2)',
   margin: 8,
   padding: 16,
