@@ -1,6 +1,10 @@
 import { useState } from 'react'
 import { getItem, setItem } from '../../helpers/localStorage'
-import { ChuckNorrisJoke } from '../jokeList/JokeList'
+import { ChuckNorrisJoke } from '../../utils/jokes'
+import Card from '../../library/molecules/Card'
+import HeartButton from '../../library/molecules/HeartButton'
+import Layout from '../../library/atoms/Layout'
+import Link from '../../library/atoms/Link'
 
 export const Favourites = () => {
   const [selectedJokes, setSelectedJokes] = useState<ChuckNorrisJoke[]>(
@@ -16,21 +20,18 @@ export const Favourites = () => {
   }
 
   return (
-    <>
-      <h6>Favourites</h6>
+    <Layout>
+      <Link to={'/jokes'}>Joke List</Link>
       {selectedJokes?.map(item => (
-        <p key={item.id}>
-          <button
+        <Card key={item.id}>
+          <HeartButton
             onClick={() => {
               deleteFavouriteJoke(item)
             }}
-          >
-            <i className="fa fa-heart" />
-          </button>
-
+          />
           {item.value}
-        </p>
+        </Card>
       ))}
-    </>
+    </Layout>
   )
 }

@@ -1,8 +1,13 @@
 import { useEffect, useState } from 'react'
 import styled from '@emotion/styled'
 import { getItem, setItem } from '../../helpers/localStorage'
-import { Link } from 'react-router-dom'
 import { ChuckNorrisJoke, URL } from '../../utils/jokes'
+import HeartButton from '../../library/molecules/HeartButton'
+import Card from '../../library/molecules/Card'
+import Button from '../../library/atoms/Button'
+import Layout from '../../library/atoms/Layout'
+import Link from '../../library/atoms/Link'
+import Icons from '../../assets/Icons'
 
 export const JokeList = () => {
   const [jokes, setJokes] = useState<ChuckNorrisJoke[]>([])
@@ -74,28 +79,30 @@ export const JokeList = () => {
   }, [timer])
 
   console.log('popupVisibility', popupVisibility)
+  const Loading = Icons['loading']
 
   return (
-    <StyledWrapper>
-      <StyledLink to={'/favourites'}>favourite jokes</StyledLink>
-      {jokes?.map(item => (
-        <StyledCard key={item.id}>
-          <StyledButton
-            onClick={() => {
-              updateFavouriteList(item)
-            }}
-          >
-            <StyledHeart
-              className="fa fa-heart"
-              selected={
+    <Layout>
+      <Link to={'/favourites'}>favourite jokes</Link>
+
+      {jokes?.length > 0 ? (
+        jokes?.map(item => (
+          <Card key={item.id}>
+            <HeartButton
+              onClick={() => {
+                updateFavouriteList(item)
+              }}
+              isSelected={
                 selectedJokes?.findIndex(joke => joke.id === item.id) > -1 ||
                 false
               }
             />
-          </StyledButton>
-          {item.value}
-        </StyledCard>
-      ))}
+            {item.value}
+          </Card>
+        ))
+      ) : (
+        <Loading />
+      )}
       <StyledOverlay isVisible={popupVisibility}>
         <StyledPopUp isVisible={popupVisibility}>
           <StyledCloseButton onClick={() => setPopupVisibility(false)}>
@@ -109,62 +116,12 @@ export const JokeList = () => {
 
           <p>You can click on the below link to manage your favourite list:</p>
 
-          <StyledLink to={'/favourites'}>favourite jokes</StyledLink>
+          <Link to={'/favourites'}>favourite jokes</Link>
         </StyledPopUp>
       </StyledOverlay>
-    </StyledWrapper>
+    </Layout>
   )
 }
-
-const StyledWrapper = styled.div(() => ({
-  width: 800,
-  display: 'flex',
-  flexDirection: 'column',
-  margin: 'auto',
-}))
-
-const StyledCard = styled.div(() => ({
-  border: '1px solid rgba(149, 157, 165, 0.2)',
-  margin: 8,
-  padding: 16,
-  borderRadius: 8,
-  color: '#7286a0',
-  boxShadow: 'rgba(149, 157, 165, 0.2) 0px 8px 24px',
-  // backgroundColor: 'aliceblue',
-  // opacity: '0.9',
-}))
-
-const StyledButton = styled.button(() => ({
-  border: 'none',
-  backgroundColor: 'transparent',
-  margin: 4,
-  padding: 8,
-  borderRadius: 8,
-  cursor: 'pointer',
-}))
-
-const StyledLink = styled(Link)(() => ({
-  textDecoration: 'none',
-  backgroundColor: '#ffe5f1',
-  width: 'fit-content',
-  margin: 4,
-  padding: 12,
-  borderRadius: 8,
-}))
-
-const StyledHeart = styled.div<{ selected: boolean }>(
-  () => ({
-    padding: 4,
-    borderRadius: 4,
-    textAlign: 'center',
-  }),
-  ({ selected }) =>
-    selected
-      ? {
-          color: '#ff7477',
-        }
-      : { color: '#b5d6d6' },
-)
 
 const StyledPopUp = styled.div<{ isVisible: boolean }>(
   () => ({
@@ -209,7 +166,7 @@ const StyledOverlay = styled.div<{ isVisible: boolean }>(
       : { visibility: 'hidden', opacity: 0 },
 )
 
-const StyledCloseButton = styled(StyledButton)(() => ({
+const StyledCloseButton = styled(Button)(() => ({
   marginLeft: 'auto',
 }))
 
