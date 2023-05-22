@@ -1,6 +1,6 @@
-import Card from 'library/molecules/Card'
-import Layout from 'library/atoms/Layout'
-import Link from 'library/atoms/Link'
+import Card from 'library/molecules/card/Card'
+import Layout from 'library/atoms/layout/Layout'
+import Link from 'library/atoms/link/Link'
 import styled from '@emotion/styled'
 
 export const NotFound = () => (

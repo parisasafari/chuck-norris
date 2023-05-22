@@ -1,4 +1,4 @@
-import { ChuckNorrisJoke } from 'consts/jokes'
+import { ChuckNorrisJoke } from 'types/interfaces'
 
 export interface LocalStorageHelpers {
   getItem: (key: string) => string | undefined

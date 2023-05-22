@@ -1,14 +1,15 @@
 import { useState } from 'react'
-import { getItem, setItem } from 'helpers/localStorage'
-import { ChuckNorrisJoke } from 'consts/jokes'
-import Card from 'library/molecules/Card'
-import HeartButton from 'library/molecules/HeartButton'
-import Layout from 'library/atoms/Layout'
-import Link from 'library/atoms/Link'
+import { getItem, setItem } from 'utils/localStorage'
+import { ChuckNorrisJoke } from 'types/interfaces'
+import Card from 'library/molecules/card/Card'
+import HeartButton from 'library/molecules/heartButton/HeartButton'
+import Layout from 'library/atoms/layout/Layout'
+import Link from 'library/atoms/link/Link'
+import { JOKE_STORAGE_KEY } from 'consts/consts'
 
 export const Favourites = () => {
   const [selectedJokes, setSelectedJokes] = useState<ChuckNorrisJoke[]>(
-    getItem('selected-jokes'),
+    getItem(JOKE_STORAGE_KEY),
   )
 
   const deleteFavouriteJoke = (joke: ChuckNorrisJoke) => {
@@ -16,7 +17,7 @@ export const Favourites = () => {
       item => item.id !== joke.id,
     )
     setSelectedJokes(updatedSelectedJokes)
-    setItem('selected-jokes', updatedSelectedJokes)
+    setItem(JOKE_STORAGE_KEY, updatedSelectedJokes)
   }
 
   return (

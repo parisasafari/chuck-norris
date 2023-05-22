@@ -2,6 +2,7 @@ import { render, screen } from '@testing-library/react'
 import { Favourites } from './index'
 import { BrowserRouter } from 'react-router-dom'
 import userEvent from '@testing-library/user-event'
+import { JOKE_STORAGE_KEY } from 'consts/consts'
 
 const dummyData = [
   {
@@ -42,11 +43,11 @@ describe('Characters page', () => {
       }),
     ) as jest.Mock
 
-    localStorage.setItem('selected-jokes', JSON.stringify(dummyData))
+    localStorage.setItem(JOKE_STORAGE_KEY, JSON.stringify(dummyData))
   })
 
   afterEach(() => {
-    localStorage.removeItem('selected-jokes')
+    localStorage.removeItem(JOKE_STORAGE_KEY)
   })
   it('renders favourite page', async () => {
     render(

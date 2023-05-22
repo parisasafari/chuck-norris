@@ -1,13 +1,14 @@
 import { useEffect, useState } from 'react'
 import styled from '@emotion/styled'
-import { getItem, setItem } from 'helpers/localStorage'
-import { BUFFER_SIZE, ChuckNorrisJoke, URL } from 'consts/jokes'
-import HeartButton from 'library/molecules/HeartButton'
-import Card from 'library/molecules/Card'
-import Button from 'library/atoms/Button'
-import Layout from 'library/atoms/Layout'
-import Link from 'library/atoms/Link'
+import { getItem, setItem } from 'utils/localStorage'
+import { BUFFER_SIZE, URL } from 'consts/consts'
+import HeartButton from 'library/molecules/heartButton/HeartButton'
+import Card from 'library/molecules/card/Card'
+import Button from 'library/atoms/button/Button'
+import Layout from 'library/atoms/layout/Layout'
+import Link from 'library/atoms/link/Link'
 import Icons from 'assets/Icons'
+import { ChuckNorrisJoke } from 'types/interfaces'
 
 export const JokeList = () => {
   const [jokes, setJokes] = useState<ChuckNorrisJoke[]>([])
@@ -43,7 +44,7 @@ export const JokeList = () => {
       updatedSelectedJokes = [...selectedJokes]
       updatedSelectedJokes.splice(jokeIndex, 1)
     }
-    setItem('selected-jokes', updatedSelectedJokes)
+    setItem('JOKE_STORAGE_KEY', updatedSelectedJokes)
     setSelectedJokes(updatedSelectedJokes)
   }
 
@@ -63,7 +64,7 @@ export const JokeList = () => {
   }, [])
 
   useEffect(() => {
-    const selected = getItem('selected-jokes')
+    const selected = getItem('JOKE_STORAGE_KEY')
     if (selected) {
       setSelectedJokes(selected)
     }

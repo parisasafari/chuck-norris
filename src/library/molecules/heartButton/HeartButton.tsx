@@ -1,5 +1,5 @@
-import Button from '../atoms/Button'
-import HeartIcon from '../atoms/HeartIcon'
+import Button from '../../atoms/button/Button'
+import HeartIcon from '../../atoms/headerIcon/HeartIcon'
 
 interface HeartButtonProps {
   isSelected?: boolean
