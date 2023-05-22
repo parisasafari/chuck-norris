@@ -1,46 +1,42 @@
-# Getting Started with Create React App
+\*\*\*Chuck Norris Jokes App
+This application is a single page React application that fetches and displays random Chuck Norris jokes. The jokes are fetched from an external API and displayed in a user-friendly manner.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+**\*Features
+Fetches random jokes from the Chuck Norris jokes API.
+Shows the list of jokes and automatically adds a new joke every 5 seconds, maintaining a buffer size of 10.
+Users can favorite and unfavorite jokes. Favorited jokes are stored in the browser's local storage.
+The application supports up to 10 favorite jokes at a time. An attempt to add more than 10 favorites will trigger an alert asking the user to remove existing favorites.
+Provides a separate page to view all favorited jokes.
+\*\*\***Tech Stack
+React: for building the UI of the application
+Typescript: for adding static type definitions and making the code robust
+Emotion: for CSS-in-JS styling solution
+Local Storage: for persisting the favorited jokes
+React Router: for managing the routing of the application
+**\***Project Structure
+.
+├── README.md
+├── package-lock.json
+├── package.json
+├── public
+│ ├── index.html
+│ └── ...
+├── src
+│ ├── App.tsx
+│ ├── assets
+│ ├── consts
+│ ├── library
+│ ├── utils
+│ ├── index.tsx
+│ ├── library
+│ ├── pages
+│ └── ...
+└── tsconfig.json
+\*\*\*\*Installation and Setup
+Clone this repository.
+Run npm install to install the dependencies.
+Run npm start to start the application.
+Open http://localhost:3000 in your browser.
 
-## Available Scripts
-
-In the project directory, you can run:
-
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+\*\*\*\*Testing
+To run the tests, execute the following command: npm test
