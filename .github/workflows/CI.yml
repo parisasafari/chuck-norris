@@ -34,3 +34,17 @@ jobs:
 
       - name: Build
         run: npm run build
+
+      - name: Package
+        run: npm pack
+
+      - name: Create Deployment
+        run: |
+          mkdir deployment
+          mv *.tgz deployment/joke-book.tgz
+
+      - name: Upload
+        uses: actions/upload-artifact@v3
+        with:
+          name: joke-book
+          path: deployment/joke-book.tgz
