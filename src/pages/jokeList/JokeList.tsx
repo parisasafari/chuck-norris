@@ -103,9 +103,9 @@ export const JokeList = () => {
       )}
       <StyledOverlay isVisible={popupVisibility}>
         <StyledPopUp isVisible={popupVisibility}>
-          <StyledCloseButton onClick={() => setPopupVisibility(false)}>
+          <Button onClick={() => setPopupVisibility(false)}>
             <StyledCloseIcon className="fa fa-window-close" />
-          </StyledCloseButton>
+          </Button>
 
           <h5>
             Your favorite list is currently at maximum capacity. Please remove
@@ -137,6 +137,9 @@ const StyledPopUp = styled.div<{ isVisible: boolean }>(
     flexDirection: 'column',
     justifyContent: 'space-evenly',
     alignItems: 'center',
+    '> button': {
+      marginLeft: 'auto',
+    },
   }),
   ({ isVisible }) =>
     isVisible
@@ -163,10 +166,6 @@ const StyledOverlay = styled.div<{ isVisible: boolean }>(
         }
       : { visibility: 'hidden', opacity: 0 },
 )
-
-const StyledCloseButton = styled(Button)(() => ({
-  marginLeft: 'auto',
-}))
 
 const StyledCloseIcon = styled.i(() => ({
   color: '#c0b9bf',
