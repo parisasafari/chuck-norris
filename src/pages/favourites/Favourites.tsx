@@ -1,10 +1,10 @@
 import { useState } from 'react'
-import { getItem, setItem } from '../../helpers/localStorage'
-import { ChuckNorrisJoke } from '../../utils/jokes'
-import Card from '../../library/molecules/Card'
-import HeartButton from '../../library/molecules/HeartButton'
-import Layout from '../../library/atoms/Layout'
-import Link from '../../library/atoms/Link'
+import { getItem, setItem } from 'helpers/localStorage'
+import { ChuckNorrisJoke } from 'consts/jokes'
+import Card from 'library/molecules/Card'
+import HeartButton from 'library/molecules/HeartButton'
+import Layout from 'library/atoms/Layout'
+import Link from 'library/atoms/Link'
 
 export const Favourites = () => {
   const [selectedJokes, setSelectedJokes] = useState<ChuckNorrisJoke[]>(

@@ -6,6 +6,7 @@ const Icons = {
       height="200px"
       viewBox="0 0 100 100"
       preserveAspectRatio="xMidYMid"
+      data-testid="loading"
     >
       <rect x="15" y="35" width="20" height="30" fill="#fef1c0">
         <animate

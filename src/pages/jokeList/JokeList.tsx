@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react'
 import styled from '@emotion/styled'
-import { getItem, setItem } from '../../helpers/localStorage'
-import { ChuckNorrisJoke, URL } from '../../utils/jokes'
-import HeartButton from '../../library/molecules/HeartButton'
-import Card from '../../library/molecules/Card'
-import Button from '../../library/atoms/Button'
-import Layout from '../../library/atoms/Layout'
-import Link from '../../library/atoms/Link'
-import Icons from '../../assets/Icons'
+import { getItem, setItem } from 'helpers/localStorage'
+import { BUFFER_SIZE, ChuckNorrisJoke, URL } from 'consts/jokes'
+import HeartButton from 'library/molecules/HeartButton'
+import Card from 'library/molecules/Card'
+import Button from 'library/atoms/Button'
+import Layout from 'library/atoms/Layout'
+import Link from 'library/atoms/Link'
+import Icons from 'assets/Icons'
 
 export const JokeList = () => {
   const [jokes, setJokes] = useState<ChuckNorrisJoke[]>([])
@@ -20,7 +20,7 @@ export const JokeList = () => {
       .then(response => response.json())
       .then(data => {
         setJokes(prevJokes => {
-          if (prevJokes.length === 10) {
+          if (prevJokes.length === BUFFER_SIZE) {
             prevJokes.unshift()
           }
           return [data, ...prevJokes]
@@ -31,10 +31,8 @@ export const JokeList = () => {
 
   const updateFavouriteList = (joke: ChuckNorrisJoke) => {
     const jokeIndex = selectedJokes?.findIndex(item => item.id === joke.id)
-    console.log('selectedJokes.length', selectedJokes.length)
-    if (jokeIndex === -1 && selectedJokes.length === 10) {
+    if (jokeIndex === -1 && selectedJokes.length === BUFFER_SIZE) {
       setPopupVisibility(true)
-      console.log('popupVisibility', popupVisibility)
       return
     }
     let updatedSelectedJokes
@@ -51,7 +49,7 @@ export const JokeList = () => {
 
   useEffect(() => {
     Promise.all(
-      Array(10)
+      Array(BUFFER_SIZE)
         .fill(URL)
         .map(url => {
           return fetch(url).then(response => response.json())
@@ -78,7 +76,6 @@ export const JokeList = () => {
     }
   }, [timer])
 
-  console.log('popupVisibility', popupVisibility)
   const Loading = Icons['loading']
 
   return (

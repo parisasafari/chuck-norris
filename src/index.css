@@ -11,13 +11,10 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
-
-.selected-heart {
-  font-size: 24px;
-  color: grey;
-}
-
-.heart {
-  font-size: 24px;
-  color: red;
-}
+/* 
+html,
+body,
+body > div {
+  background: url('../src/assets/chuck-norris.png');
+  background-size: cover;
+} */

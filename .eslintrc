@@ -23,7 +23,11 @@
   },
   "settings": {
     "import/resolver": {
-      "node": { "paths": ["src"], "extensions": [".js", ".jsx", ".ts", ".tsx"] }
+      "node": {
+        "paths": ["src"],
+        "extensions": [".js", ".jsx", ".ts", ".tsx"],
+        "alias": [["src/library", "library"]]
+      }
     }
   }
 }

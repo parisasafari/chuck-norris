@@ -1,6 +1,6 @@
-import Card from '../../library/molecules/Card'
-import Layout from '../../library/atoms/Layout'
-import Link from '../../library/atoms/Link'
+import Card from 'library/molecules/Card'
+import Layout from 'library/atoms/Layout'
+import Link from 'library/atoms/Link'
 import styled from '@emotion/styled'
 
 export const NotFound = () => (
@@ -16,7 +16,7 @@ export const NotFound = () => (
         width="100"
         height="100"
       />
-      <p> 404 :( Not found</p>
+      <p> 404 Not found</p>
     </Card>
   </Layout>
 )
