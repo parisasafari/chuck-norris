@@ -1,10 +1,5 @@
 import { ChuckNorrisJoke } from 'types/interfaces'
 
-export interface LocalStorageHelpers {
-  getItem: (key: string) => string | undefined
-  setItem: (key: string, value: string) => string
-}
-
 export const setItem = (key: string, item: ChuckNorrisJoke[]) => {
   localStorage.setItem(key, JSON.stringify(item))
 }

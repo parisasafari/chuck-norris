@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import styled from '@emotion/styled'
 import { getItem, setItem } from 'utils/localStorage'
-import { BUFFER_SIZE, URL } from 'consts/consts'
+import { BUFFER_SIZE, JOKE_STORAGE_KEY, URL } from 'consts/consts'
 import HeartButton from 'library/molecules/heartButton/HeartButton'
 import Card from 'library/molecules/card/Card'
 import Button from 'library/atoms/button/Button'
@@ -44,7 +44,7 @@ export const JokeList = () => {
       updatedSelectedJokes = [...selectedJokes]
       updatedSelectedJokes.splice(jokeIndex, 1)
     }
-    setItem('JOKE_STORAGE_KEY', updatedSelectedJokes)
+    setItem(JOKE_STORAGE_KEY, updatedSelectedJokes)
     setSelectedJokes(updatedSelectedJokes)
   }
 
@@ -64,7 +64,7 @@ export const JokeList = () => {
   }, [])
 
   useEffect(() => {
-    const selected = getItem('JOKE_STORAGE_KEY')
+    const selected = getItem(JOKE_STORAGE_KEY)
     if (selected) {
       setSelectedJokes(selected)
     }

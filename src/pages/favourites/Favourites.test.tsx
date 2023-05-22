@@ -27,12 +27,6 @@ const dummyData = [
   },
 ]
 
-const localStorageMock = {
-  getItem: jest.fn(),
-  setItem: jest.fn(),
-  clear: jest.fn(),
-}
-
 describe('Characters page', () => {
   beforeEach(() => {
     global.fetch = jest.fn(() =>

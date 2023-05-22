@@ -9,7 +9,7 @@ import { JOKE_STORAGE_KEY } from 'consts/consts'
 
 export const Favourites = () => {
   const [selectedJokes, setSelectedJokes] = useState<ChuckNorrisJoke[]>(
-    getItem(JOKE_STORAGE_KEY),
+    getItem('selected-jokes'),
   )
 
   const deleteFavouriteJoke = (joke: ChuckNorrisJoke) => {
